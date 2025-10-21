@@ -16,14 +16,20 @@ struct ITunesApp: Decodable, Identifiable, Hashable {
     let trackName: String
     let artistName: String
     let price: Double
+    let description: String?
+    let releaseNotes: String?
     let currency: String
     let primaryGenreName: String
+    let screenshotUrls: [String]
+    let releaseDate: String
     let genres: [String]
     let genreIds: [String]
     let artworkUrl100: String
+    let artworkUrl512: String
     let trackViewUrl: String
     let userRatingCount: Int
     let averageUserRating: Double
+    let trackContentRating: String
     
     var id: Int { trackId }
 }

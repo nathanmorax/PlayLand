@@ -16,7 +16,7 @@ enum AppRoute: Hashable {
 
 class AppCoordinator: ObservableObject {
     @Published var path = NavigationPath()
-        @Published var selectedTab: Tab = .apps
+    @Published var selectedTab: Tab = .apps
     
     enum Tab {
         case apps
@@ -45,7 +45,8 @@ extension AppCoordinator {
     func build(route: AppRoute) -> some View {
         switch route {
         case .appDetail(let app):
-            GameDetailView(app: app)
+            let viewModel = GameDetailViewModel(itemApp: app)
+            GameDetailView(app: app, viewModel: viewModel)
         case .appsGenre(let genre, let apps):
             GameFilteredGenre(genre: genre, games: apps)
             

@@ -24,8 +24,8 @@ struct GameGenreButton: View {
                     }
                     .padding(.horizontal, 12)
                     .padding(.vertical, 6)
-                    .background(selectedGenre == genre ? Color.blue : Color.gray.opacity(0.3))
-                    .foregroundColor(selectedGenre == genre ? .white : .black)
+                    .background(Color.gray.opacity(0.3))
+                    .foregroundColor(.black)
                     .cornerRadius(7)
                 }
             }
