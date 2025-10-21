@@ -8,7 +8,7 @@ import SwiftUI
 
 let monthYearFormatter: DateFormatter = {
     let formatter = DateFormatter()
-    formatter.locale = Locale(identifier: "es_MX")
+    formatter.locale = Locale(identifier: "en_US")
     formatter.dateFormat = "MMMM yyyy"
     return formatter
 }()

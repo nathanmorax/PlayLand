@@ -26,8 +26,26 @@ struct StretchyModifier: ViewModifier {
     }
 }
 
+struct CornerRadiusModifier: ViewModifier {
+    let radius: CGFloat
+    let corners: UIRectCorner
+    
+    func body(content: Content) -> some View {
+        content
+            .clipShape(
+                RoundedCornerShape(radius: radius, corners: corners)
+            )
+    }
+}
+
+
 extension View {
+    
     func stretchy() -> some View {
         self.modifier(StretchyModifier())
+    }
+    
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        modifier(CornerRadiusModifier(radius: radius, corners: corners))
     }
 }

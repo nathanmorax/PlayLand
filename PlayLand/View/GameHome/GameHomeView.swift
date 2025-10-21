@@ -35,18 +35,10 @@ struct GameHomeView: View {
     
     @ViewBuilder
      private var contentView: some View {
-         switch vm.loadingState {
-         case .idle, .loading:
-             LoadingStateView(messageState: vm.loadingState.messageState, imageState: vm.loadingState.imageState)
-             
-         case .loaded:
+         if vm.loadingState == .loaded {
              loadedContentView
-             
-         case .empty:
-             EmptyStateView(imageState: vm.loadingState.imageState, messageState: vm.loadingState.imageState)
-             
-         case .error:
-             ErrorStateView(messageState: vm.loadingState.messageState, imageState: vm.loadingState.imageState)
+         } else {
+             StateUIView(state: vm.loadingState, onRetry: {})
          }
      }
     

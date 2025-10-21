@@ -32,7 +32,7 @@ class GameHomeViewModel: ObservableObject {
         loadingState = .loading
         
         RSSAppFetcher.mostPlayed()
-            //.delay(for: .seconds(5), scheduler: DispatchQueue.main)
+            //.delay(for: .seconds(2), scheduler: DispatchQueue.main)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 if case let .failure(error) = completion {
