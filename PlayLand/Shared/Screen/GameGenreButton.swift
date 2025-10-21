@@ -9,6 +9,7 @@ import SwiftUI
 struct GameGenreButton: View {
     @Binding var selectedGenre: GameGenre?
     
+    
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {

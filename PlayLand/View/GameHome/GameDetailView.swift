@@ -21,6 +21,7 @@ struct GameDetailView: View {
             ZStack(alignment: .bottom) {
                 
                 CoverImageAppView(coverImageApp: app.artworkUrl512)
+                    .stretchy()
                 
                 IconAppView(iconApp: app.artworkUrl100)
                     .offset(y: 50)
@@ -67,8 +68,9 @@ struct GameDetailView: View {
         }
     }
     
-    @ViewBuilder
     
+    
+    @ViewBuilder
     var descriptionApp: some View {
         
         Text(app.trackName)
@@ -126,12 +128,11 @@ struct GameDetailView: View {
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width: 200, height: 400)
-                                            .cornerRadius(12)
-                                            .shadow(radius: 4)
+                                            .cornerRadius(22)
                                     } placeholder: {
                                         Color.gray.opacity(0.3)
                                             .frame(width: 200, height: 400)
-                                            .cornerRadius(12)
+                                            .cornerRadius(22)
                                     }
                                 }
                             }
@@ -169,5 +170,3 @@ struct ExpandableText: View {
         }
     }
 }
-
-

@@ -10,7 +10,8 @@ import SwiftUI
 struct GameFilteredGenre: View {
     let genre: GameGenre
     let games: [ITunesApp]
-    
+    @ObservedObject var coordinator: AppCoordinator
+
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 16) {
@@ -51,9 +52,12 @@ struct GameFilteredGenre: View {
                     
                         Spacer()
                         
-                        Button(action: {}) {
+                        Button(action: {
+                            coordinator.navigate(to: .appDetail(app: game))
+                        }) {
                             Text("See More")
                         }
+                        .buttonStyle(.borderedProminent)
                     }
                     
                     

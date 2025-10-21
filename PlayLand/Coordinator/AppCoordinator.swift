@@ -48,7 +48,7 @@ extension AppCoordinator {
             let viewModel = GameDetailViewModel(itemApp: app)
             GameDetailView(app: app, viewModel: viewModel)
         case .appsGenre(let genre, let apps):
-            GameFilteredGenre(genre: genre, games: apps)
+            GameFilteredGenre(genre: genre, games: apps, coordinator: self)
             
         default:
             EmptyView()
