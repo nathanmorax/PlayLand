@@ -64,18 +64,32 @@ struct CoverImageAppView: View {
     
     var body: some View {
         Group {
-            AsyncImage(url: URL(string: coverImageApp)) { image in
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: size.width, height: size.height)
-                    .clipped()
-            } placeholder: {
-                Color.gray.opacity(0.3)
-                    .frame(width: size.width, height: size.height)
+            AsyncImage(url: URL(string: coverImageApp)) { phase in
+                switch phase {
+                case .empty:
+                    placeholderImage
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: size.width, height: size.height)
+                        .clipped()
+                case .failure(_):
+                    placeholderImage
+                @unknown default:
+                    placeholderImage
+                }
             }
         }
         .modifier(SizeModifier(size: size))
+    }
+    
+    private var placeholderImage: some View {
+        Image("coverEmpty")
+            .resizable()
+            .scaledToFill()
+            .frame(width: size.width, height: size.height)
+            .clipped()
     }
 }
 
