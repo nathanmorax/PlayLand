@@ -18,19 +18,21 @@ struct GameDetailView: View {
     
     var body: some View {
         ScrollView {
-            ZStack(alignment: .bottom) {
-                
-                CoverImageAppView(coverImageApp: app.artworkUrl512)
+            ZStack(alignment: .bottomLeading) {
+                CoverImageAppView(coverImageApp: app.artworkUrl512, size: .large)
                     .stretchy()
                 
-                IconAppView(iconApp: app.artworkUrl100)
-                    .offset(y: 50)
+                CoverImageAppView(coverImageApp: app.artworkUrl100, size: .small)
+                    .offset(y: 40)
+                    .frame(maxWidth: .infinity)
+                
             }
             .padding(.bottom, 50)
             
             VStack(alignment: .center, spacing: 8) {
                 
                 descriptionApp
+                    .frame(maxWidth: .infinity)
                 
                 Spacer().frame(height: 16)
                 

@@ -18,28 +18,8 @@ struct GameFilteredGenre: View {
                 ForEach(games) { game in
                     
                     HStack(alignment: .top, spacing: 8) {
-                        AsyncImage(url: URL(string: game.artworkUrl100 ?? "")) { phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                                    .frame(width: 70, height: 70)
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 70, height: 70)
-                                    .cornerRadius(12)
-                                    .shadow(radius: 3)
-                            case .failure:
-                                Image(systemName: "photo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 70, height: 70)
-                                    .foregroundColor(.gray.opacity(0.5))
-                            @unknown default:
-                                EmptyView()
-                            }
-                        }
+                        CoverImageAppView(coverImageApp: game.artworkUrl100, size: .small)
+                        
                         
                         VStack(alignment: .leading) {
                             

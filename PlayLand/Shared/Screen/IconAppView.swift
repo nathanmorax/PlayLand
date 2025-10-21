@@ -10,7 +10,6 @@ struct IconAppView: View {
     var iconApp: String
     
     var body: some View {
-        // 🧩 Ícono de la app
         VStack {
             AsyncImage(url: URL(string: iconApp)) { icon in
                 icon
