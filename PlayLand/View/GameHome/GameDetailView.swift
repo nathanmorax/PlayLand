@@ -124,19 +124,10 @@ struct GameDetailView: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 12) {
                             ForEach(app.screenshotUrls, id: \.self) { urlString in
-                                if let url = URL(string: urlString) {
-                                    AsyncImage(url: url) { image in
-                                        image
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 200, height: 400)
-                                            .cornerRadius(22)
-                                    } placeholder: {
-                                        Color.gray.opacity(0.3)
-                                            .frame(width: 200, height: 400)
-                                            .cornerRadius(22)
-                                    }
-                                }
+                                
+                                CoverImageAppView(coverImageApp: urlString, size: .large)
+                                    .cornerRadius(8, corners: .allCorners)
+                                
                             }
                         }
                         .padding(.horizontal, 4)

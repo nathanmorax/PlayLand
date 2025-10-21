@@ -23,10 +23,18 @@ struct MainTabView: View {
             .tag(AppCoordinator.Tab.apps)
             
             NavigationStack(path: $coordinator.path) {
-                GameHomeView(coordinator: coordinator)
-                    .navigationDestination(for: AppRoute.self) { route in
-                        coordinator.build(route: route)
-                    }
+                VStack {
+                    Spacer()
+                    Image("coverEmpty")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 150, height: 150)
+                        .opacity(0.5)
+                    Text("Search view coming soon")
+                        .foregroundColor(.gray)
+                        .padding(.top, 8)
+                    Spacer()
+                }
             }
             .tabItem {
                 Label("Search", systemImage: "magnifyingglass")
