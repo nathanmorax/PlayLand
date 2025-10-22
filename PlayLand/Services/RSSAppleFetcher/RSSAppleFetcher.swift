@@ -65,9 +65,9 @@ private extension RSSAppFetcher {
         static let basePath = "/search"
     }
     
-    func makeAppGamesComponents(term: String = "games",
-                                   country: String = "US",
-                                   limit: Int = 50) -> URLComponents {
+    func makeBaseComponents(term: String,
+                            country: String = "US",
+                            limit: Int = 50) -> URLComponents {
         var components = URLComponents()
         components.scheme = AppleRSSAPI.scheme
         components.host = AppleRSSAPI.host
@@ -82,18 +82,16 @@ private extension RSSAppFetcher {
         return components
     }
     
-    private func makeSearchComponents(term: String, country: String = "US", limit: Int = 50) -> URLComponents {
-        var components = URLComponents()
-        components.scheme = AppleRSSAPI.scheme
-        components.host = AppleRSSAPI.host
-        components.path = AppleRSSAPI.basePath
-        components.queryItems = [
-            URLQueryItem(name: "term", value: term + " games"),
-            URLQueryItem(name: "country", value: country),
-            URLQueryItem(name: "media", value: "software"),
-            URLQueryItem(name: "entity", value: "software"),
-            URLQueryItem(name: "limit", value: "\(limit)")
-        ]
-        return components
+    func makeAppGamesComponents(term: String = "games",
+                                country: String = "US",
+                                limit: Int = 50) -> URLComponents {
+        makeBaseComponents(term: term, country: country, limit: limit)
+    }
+
+    func makeSearchComponents(term: String,
+                              country: String = "US",
+                              limit: Int = 50) -> URLComponents {
+        makeBaseComponents(term: term + " games", country: country, limit: limit)
     }
 }
+
