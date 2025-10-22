@@ -48,9 +48,9 @@ struct GameHomeView: View {
                  FeaturedGameView()
                  
                  GameGenreButton(selectedGenre: $selectedGenre)
-                     .onChange(of: selectedGenre) { newValue in
-                         if let genre = newValue {
-                             vm.filter(by: newValue)
+                     .onChange(of: selectedGenre) {
+                         if let genre = selectedGenre {
+                             vm.filter(by: genre)
                              coordinator.navigate(to: .appsGenre(genre: genre, apps: vm.filteredGames))
                          }
                      }
