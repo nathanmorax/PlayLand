@@ -14,7 +14,8 @@ enum RSSAppError: Error {
 }
 
 protocol RSSAppFetchable {
-    func mostPlayed() -> AnyPublisher<ITunesSearchResponse, RSSAppError>
+    func getAppGames() -> AnyPublisher<ITunesSearchResponse, RSSAppError>
+    func searchAppGame(term: String) -> AnyPublisher<ITunesSearchResponse, RSSAppError>
 }
 
 
@@ -29,10 +30,14 @@ class RSSAppFetcher {
 }
 
 extension RSSAppFetcher: RSSAppFetchable {
+    func searchAppGame(term: String) -> AnyPublisher<ITunesSearchResponse, RSSAppError> {
+        return RSSApppFetch(with: makeSearchComponents(term: term))
+    }
     
-    func mostPlayed() -> AnyPublisher<ITunesSearchResponse, RSSAppError> {
+    
+    func getAppGames() -> AnyPublisher<ITunesSearchResponse, RSSAppError> {
         
-        return RSSApppFetch(with: makeTopPaidGamesComponents())
+        return RSSApppFetch(with: makeAppGamesComponents())
     }
     
     private func RSSApppFetch<T>(with components: URLComponents) -> AnyPublisher<T, RSSAppError> where T: Decodable {
@@ -60,7 +65,7 @@ private extension RSSAppFetcher {
         static let basePath = "/search"
     }
     
-    func makeTopPaidGamesComponents(term: String = "games",
+    func makeAppGamesComponents(term: String = "games",
                                    country: String = "US",
                                    limit: Int = 50) -> URLComponents {
         var components = URLComponents()
@@ -69,6 +74,21 @@ private extension RSSAppFetcher {
         components.path = AppleRSSAPI.basePath
         components.queryItems = [
             URLQueryItem(name: "term", value: term),
+            URLQueryItem(name: "country", value: country),
+            URLQueryItem(name: "media", value: "software"),
+            URLQueryItem(name: "entity", value: "software"),
+            URLQueryItem(name: "limit", value: "\(limit)")
+        ]
+        return components
+    }
+    
+    private func makeSearchComponents(term: String, country: String = "US", limit: Int = 50) -> URLComponents {
+        var components = URLComponents()
+        components.scheme = AppleRSSAPI.scheme
+        components.host = AppleRSSAPI.host
+        components.path = AppleRSSAPI.basePath
+        components.queryItems = [
+            URLQueryItem(name: "term", value: term + " games"),
             URLQueryItem(name: "country", value: country),
             URLQueryItem(name: "media", value: "software"),
             URLQueryItem(name: "entity", value: "software"),

@@ -10,7 +10,7 @@ struct ITunesSearchResponse: Decodable {
     let results: [ITunesApp]
 }
 
-struct ITunesApp: Decodable, Identifiable, Hashable {
+struct ITunesApp: Decodable, Identifiable, Hashable, Encodable {
     let trackId: Int
     let trackName: String
     let artistName: String

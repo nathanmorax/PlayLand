@@ -9,28 +9,43 @@ import Foundation
 
 class GameHomeViewModel: ObservableObject {
     
-    @Published var allGames: [ITunesApp] = []
-    @Published var mostPlayed: [ITunesApp] = []
-    @Published var topRated: [ITunesApp] = []
-    @Published var filteredGames: [ITunesApp] = []
+    @Published private(set) var  allGames: [ITunesApp] = []
+    @Published private(set) var  mostPlayed: [ITunesApp] = []
+    @Published private(set) var  topRated: [ITunesApp] = []
+    @Published private(set) var  filteredGames: [ITunesApp] = []
     @Published var loadingState: LoadingState = .idle
-    
+    @Published var selectedGenre: GameGenre? = nil
     
     private let RSSAppFetcher: RSSAppFetcher
     private var disposables = Set<AnyCancellable>()
     
     init(RSSAppFetcher: RSSAppFetcher) {
         self.RSSAppFetcher = RSSAppFetcher
+        self.setupBindings()
     }
     
+    private func setupBindings() {
+        $selectedGenre
+            .sink { [weak self] genre in
+                self?.applyFilter(genre: genre)
+            }
+            .store(in: &disposables)
+    }
     
     func loadGame() {
         
-        guard loadingState != .loading else { return }
         
+        guard loadingState != .loading else { return }
         loadingState = .loading
         
-        RSSAppFetcher.mostPlayed()
+        if let cached = GameCache.shared.getGames() {
+            allGames = cached
+            processGames()
+            loadingState = .loaded
+            return
+        }
+        
+        RSSAppFetcher.getAppGames()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 if case let .failure(error) = completion {
@@ -44,6 +59,7 @@ class GameHomeViewModel: ObservableObject {
                 if response.results.isEmpty {
                     self.loadingState = .empty
                 } else {
+                    GameCache.shared.save(response.results)
                     self.processGames()
                     self.loadingState = .loaded
                 }
@@ -56,13 +72,12 @@ class GameHomeViewModel: ObservableObject {
         loadGame()
     }
     
-    func filter(by genre: GameGenre?) {
-        guard let genre = genre else {
+    private func applyFilter(genre: GameGenre?) {
+        if let genre = genre {
+            filteredGames = allGames.filter { $0.genres.contains(genre.rawValue) }
+        } else {
             filteredGames = allGames
-            return
         }
-        filteredGames = allGames.filter { $0.genres.contains(genre.rawValue) }
-
     }
     
     private func processGames() {
