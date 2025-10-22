@@ -13,7 +13,6 @@ class GameHomeViewModel: ObservableObject {
     @Published var mostPlayed: [ITunesApp] = []
     @Published var topRated: [ITunesApp] = []
     @Published var filteredGames: [ITunesApp] = []
-    @Published var titleSection: String = ""
     @Published var loadingState: LoadingState = .idle
     
     
@@ -32,7 +31,6 @@ class GameHomeViewModel: ObservableObject {
         loadingState = .loading
         
         RSSAppFetcher.mostPlayed()
-            //.delay(for: .seconds(2), scheduler: DispatchQueue.main)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 if case let .failure(error) = completion {
@@ -69,12 +67,10 @@ class GameHomeViewModel: ObservableObject {
     
     private func processGames() {
         mostPlayed = allGames
-            .filter { $0.userRatingCount != nil }
-            .sorted { ($0.userRatingCount ?? 0) > ($1.userRatingCount ?? 0) }
+            .sorted { $0.userRatingCount > $1.userRatingCount }
         
         topRated = allGames
-            .filter { $0.averageUserRating != nil }
-            .sorted { ($0.averageUserRating ?? 0) > ($1.averageUserRating ?? 0) }
+            .sorted { $0.averageUserRating > $1.averageUserRating }
     }
     
 }

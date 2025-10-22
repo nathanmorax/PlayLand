@@ -20,9 +20,7 @@ struct GameSectionView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title)
-                .font(.title2)
-                .bold()
-                .padding(.horizontal, 4)
+                .infoTitleSection()
             
             LazyVGrid(columns: columns, spacing: 12) {
                 ForEach(games.prefix(4)) { game in 

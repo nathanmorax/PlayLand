@@ -26,7 +26,6 @@ struct GameFilteredGenre: View {
                             
                             CoverImageAppView(coverImageApp: game.artworkUrl100, size: .small)
                             
-                            Spacer()
                             
                             VStack(alignment: .leading) {
                                 Text(game.trackName)

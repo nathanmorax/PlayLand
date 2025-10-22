@@ -37,12 +37,7 @@ struct GameDetailView: View {
                 Spacer().frame(height: 16)
                 
                 attributesApp
-                    .padding()
-                    .frame(height: 66)
-                    .frame(maxWidth: .infinity)
-                    .background(.white)
-                    .cornerRadius(22)
-                    .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
+                    .cardAtributedAppDetail()
                 
                 screenshotsApp
                 
@@ -76,13 +71,11 @@ struct GameDetailView: View {
     var descriptionApp: some View {
         
         Text(app.trackName)
-            .font(.title)
-            .bold()
+            .infoTitleSection()
             .multilineTextAlignment(.center)
         
         Text(app.artistName)
-            .font(.subheadline)
-            .foregroundColor(.secondary)
+            .infoDetail()
             .multilineTextAlignment(.center)
         
         if let description = app.description {
